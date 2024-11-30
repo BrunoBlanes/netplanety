@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<!-- Project properties -->
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<InvariantGlobalization>true</InvariantGlobalization>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>575218d4-9a63-45cf-98ad-8fd08063d29f</UserSecretsId>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<!-- Package references -->
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Project references -->
+		<ProjectReference Include="..\Integrations\IXC\Netplanety.Integrations.IXC.csproj" />
+		<ProjectReference Include="..\Shared\Netplanety.Shared.csproj" />
+	</ItemGroup>
+</Project>
