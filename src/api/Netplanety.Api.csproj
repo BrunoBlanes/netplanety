@@ -17,7 +17,7 @@
 
 	<ItemGroup>
 		<!-- Project references -->
-		<ProjectReference Include="..\Integrations\IXC\Netplanety.Integrations.IXC.csproj" />
-		<ProjectReference Include="..\Shared\Netplanety.Shared.csproj" />
+		<ProjectReference Include="..\integrations\ixc\Netplanety.Integrations.IXC.csproj" />
+		<ProjectReference Include="..\shared\Netplanety.Shared.csproj" />
 	</ItemGroup>
 </Project>

@@ -17,7 +17,7 @@
 
 	<ItemGroup>
 		<!-- Project references -->
-		<ProjectReference Include="..\..\Shared\Netplanety.Shared.csproj" />
+		<ProjectReference Include="..\..\shared\Netplanety.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
