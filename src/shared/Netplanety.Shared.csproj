@@ -7,4 +7,11 @@
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	
+	<ItemGroup>
+		<!-- Package references -->
+		<PackageReference Include="MailKit" Version="4.8.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
+	</ItemGroup>
 </Project>
