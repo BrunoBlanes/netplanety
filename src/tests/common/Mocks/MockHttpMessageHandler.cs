@@ -2,7 +2,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Netplanety.Shared.Tests.Mocks;
+namespace Netplanety.Tests.Common.Mocks;
 
 public sealed class MockHttpMessageHandler : HttpMessageHandler
 {

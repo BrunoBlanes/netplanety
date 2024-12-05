@@ -22,5 +22,11 @@
 	<ItemGroup>
 		<!-- Project references -->
 		<ProjectReference Include="..\..\shared\Netplanety.Shared.csproj" />
+		<ProjectReference Include="..\common\Netplanety.Tests.Common.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<!-- Assembly attributes -->
+		<AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
 	</ItemGroup>
 </Project>

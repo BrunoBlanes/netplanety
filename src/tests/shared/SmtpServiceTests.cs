@@ -7,6 +7,7 @@ using MimeKit;
 
 using Netplanety.Shared.Services.Smtp;
 using Netplanety.Shared.Tests.Mocks;
+using Netplanety.Tests.Common.Mocks;
 
 namespace Netplanety.Shared.Tests;
 

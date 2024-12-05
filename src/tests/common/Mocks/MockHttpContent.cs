@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Netplanety.Shared.Tests.Mocks;
+namespace Netplanety.Tests.Common.Mocks;
 
 public sealed class MockHttpContent : HttpContent
 {

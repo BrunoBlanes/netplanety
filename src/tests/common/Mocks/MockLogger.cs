@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Netplanety.Shared.Tests.Mocks;
+namespace Netplanety.Tests.Common.Mocks;
 
 public sealed class MockLogger<T> : ILogger<T>
 {
