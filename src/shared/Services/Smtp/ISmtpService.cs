@@ -15,5 +15,6 @@ public interface ISmtpService : IAsyncDisposable
 	/// <param name="cancellationToken">
 	/// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
 	/// </param>
+	/// <exception cref="OperationCanceledException"></exception>
 	public Task SendAsync(string user, string address, string subject, string content, CancellationToken cancellationToken);
 }
