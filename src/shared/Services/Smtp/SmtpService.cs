@@ -76,8 +76,9 @@ internal sealed class SmtpService : ISmtpService
 
 		if (smtpClient.IsAuthenticated)
 		{
-			// Send the message if the connection is established
+			// Send the message if the connection is established and exit early
 			await smtpClient.SendAsync(message, cancellationToken).ConfigureAwait(false);
+			return;
 		}
 
 		// Enqueue the message to send it once
