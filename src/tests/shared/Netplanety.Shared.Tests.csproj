@@ -13,7 +13,7 @@
 
 	<ItemGroup>
 		<!-- Package references -->
-		<PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.6" />
+		<PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.13.0" />
 		<PackageReference Update="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
 		<PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
 		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.12.0" />
@@ -21,10 +21,10 @@
 
 	<ItemGroup>
 		<!-- Project references -->
-		<ProjectReference Include="..\..\..\integrations\ixc\Netplanety.Integrations.IXC.csproj" />
-		<ProjectReference Include="..\..\common\Netplanety.Tests.Common.csproj" />
+		<ProjectReference Include="..\..\shared\Netplanety.Shared.csproj" />
+		<ProjectReference Include="..\common\Netplanety.Tests.Common.csproj" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 		<!-- Assembly attributes -->
 		<AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />

@@ -2,9 +2,9 @@
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Netplanety.Integrations.IXC.Tests.Mocks;
+namespace Netplanety.Tests.Common.Mocks;
 
-internal sealed class MockHttpMessageHandler : HttpMessageHandler
+public sealed class MockHttpMessageHandler : HttpMessageHandler
 {
 	private readonly string mockContent;
 

@@ -9,10 +9,15 @@
 *.user
 *.userosscache
 *.sln.docstates
+
+# Ignore Visual Studio solution files
 *.sln
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+
+# Ignore Duende Identity Server keys
+[Kk]eys/
 
 # Mono auto generated files
 mono_crash.*
@@ -45,6 +50,7 @@ Generated\ Files/
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+[Rr]eport/
 
 # NUnit
 *.VisualState.xml
@@ -61,6 +67,7 @@ BenchmarkDotNet.Artifacts/
 
 # .NET Core
 project.lock.json
+appsettings.Development.json
 project.fragment.lock.json
 artifacts/
 

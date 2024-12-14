@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Netplanety.Integrations.IXC.Tests.Mocks;
+namespace Netplanety.Tests.Common.Mocks;
 
-internal sealed class MockLogger<T> : ILogger<T>
+public sealed class MockLogger<T> : ILogger<T>
 {
 	public IDisposable? BeginScope<TState>(TState state) where TState : notnull
 	{

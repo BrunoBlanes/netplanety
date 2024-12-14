@@ -1,8 +1,8 @@
 ﻿using System.Net;
 
-namespace Netplanety.Integrations.IXC.Tests.Mocks;
+namespace Netplanety.Tests.Common.Mocks;
 
-internal sealed class MockHttpContent : HttpContent
+public sealed class MockHttpContent : HttpContent
 {
 	private readonly byte[] buffer;
 

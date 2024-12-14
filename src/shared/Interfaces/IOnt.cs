@@ -1,6 +1,6 @@
 ﻿namespace Netplanety.Shared.Interfaces;
 
-public interface IFiberTerminal
+public interface IOnt
 {
 	public int Id { get; set; }
 }
