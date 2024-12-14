@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-
-using Netplanety.Integrations.IXC;
-using Netplanety.Shared.Interfaces;
 using Netplanety.Integrations.IXC.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Netplanety.Shared.Extensions;
+using Netplanety.Shared.Identity;
 
 namespace Netplanety.Api;
 
@@ -31,17 +31,40 @@ public partial class Program
 		// Add OpenAPI support
 		builder.Services.AddOpenApi();
 
-#if DEBUG
 		// Add and configure ERP integration
 		builder.Services.AddIXCSoft(options =>
 		{
 			options.HttpClientOptions.Token = builder.Configuration["token"] ?? string.Empty;
 			options.HttpClientOptions.BaseAddress = builder.Configuration["endpoint"] ?? string.Empty;
 		});
-#endif
+
+		// Add JSON Web Token authentication scheme
+		builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+		{
+			// Sets the token authority and type
+			options.Authority = builder.Configuration["authentication:authority"];
+			options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+
+			// Validates the audience claim
+			options.TokenValidationParameters.ValidateAudience = true;
+			options.TokenValidationParameters.ValidAudiences = [ ApiResources.Clients ];
+		});
+
+		// Add authorization polices
+		builder.Services.AddAuthorization(options =>
+		{ 
+			options.AddPolicy(AuthorizationPolicies.Identity, policy =>
+			{
+				policy.RequireScope(IdentityScopes.Read);
+			});
+		});
 
 		WebApplication app = builder.Build();
 		app.UseHttpsRedirection();
+
+		// Adds authentication and authorization
+		app.UseAuthentication();
+		app.UseAuthorization();
 
 		// Map endpoints
 		app.MapControllers();

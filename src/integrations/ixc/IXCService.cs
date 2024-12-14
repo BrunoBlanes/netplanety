@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 
 using Netplanety.Integrations.IXC.Extensions.Http;
 using Netplanety.Integrations.IXC.Models;
+using Netplanety.Shared.Exceptions;
 using Netplanety.Shared.Interfaces;
 
 namespace Netplanety.Integrations.IXC;
@@ -19,7 +20,7 @@ internal sealed class IXCService : IERPService, IDisposable
 	private readonly HttpClient httpClient;
 	private bool disposedValue;
 
-	internal IXCService(ILogger<IXCService> logger, HttpClient httpClient, IOptions<IXCServiceOptions> options)
+	public IXCService(ILogger<IXCService> logger, HttpClient httpClient, IOptions<IXCServiceOptions> options)
 	{
 		this.logger = logger;
 		this.httpClient = httpClient;
@@ -30,33 +31,31 @@ internal sealed class IXCService : IERPService, IDisposable
 		this.httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 	}
 
-	public async Task<IFiberTerminal?> GetFiberTerminalAsync(int id, CancellationToken cancellationToken)
+	public async Task<IOnt?> GetOntAsync(int id, CancellationToken cancellationToken)
 	{
-		FiberClient? fiberClient = await GetByIdAsync<FiberClient>(id, Endpoints.FiberClient, cancellationToken);
-		return fiberClient?.ToFiberTerminal();
+		IXCOnt? fiberClient = await httpClient.GetByIdAsync<IXCOnt>(id, QueryEndpoints.FiberClient, cancellationToken);
+		return fiberClient?.ToOnt();
 	}
 
-	/// <summary>
-	/// Get the <typeparamref name="T"/> object with the specified <paramref name="id"/>.
-	/// </summary>
-	/// <typeparam name="T">The object type.</typeparam>
-	/// <param name="id">The <paramref name="id"/> of the <typeparamref name="T"/> to return.</param>
-	/// <param name="endpoint">The API <paramref name="endpoint"/> the request is sent to.</param>
-	/// <param name="cancellationToken">
-	/// A cancellation token that can be used by other objects or threads to receive notice of cancellation.
-	/// </param>
-	/// <returns>The <typeparamref name="T"/> object or <c>null</c> if not found.</returns>
-	/// <exception cref="Netplanety.Shared.Exceptions.DuplicateIdException"></exception>
-	/// <exception cref="Netplanety.Shared.Exceptions.DeserializationException"></exception>
-	/// <exception cref="OperationCanceledException"></exception>
-	private async Task<T?> GetByIdAsync<T>(int id, string endpoint, CancellationToken cancellationToken) where T: struct
+	public async Task<IClient?> GetClientByCpfAsync(string cpf, CancellationToken cancellationToken)
 	{
-		return await httpClient.GetByIdAsync<T>(id, endpoint, cancellationToken);
+		IXCClient? client;
+
+		try
+		{
+			client = await httpClient.GetSingleAsync<IXCClient>(QueryEndpoints.Client, QueryFilters.CPF, cpf, cancellationToken);
+			return client?.ToClient();
+		}
+
+		catch (InvalidOperationException)
+		{
+			throw new DuplicateCpfException(cpf);
+		}
 	}
 
 	private void Dispose(bool disposing)
 	{
-		if (!disposedValue)
+		if (disposedValue is false)
 		{
 			if (disposing)
 			{

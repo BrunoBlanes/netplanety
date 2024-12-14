@@ -7,7 +7,7 @@ using Netplanety.Shared.Models;
 
 namespace Netplanety.Integrations.IXC.Models;
 
-internal readonly struct FiberClient
+internal readonly struct IXCOnt
 {
 	[JsonInclude]
 	internal string Id { get; }
@@ -71,7 +71,7 @@ internal readonly struct FiberClient
 	internal string VLAN { get; }
 
 	[JsonConstructor]
-	internal FiberClient(
+	internal IXCOnt(
 		string id,
 		string contractId,
 		string projectId,
@@ -108,14 +108,14 @@ internal readonly struct FiberClient
 	}
 
 	/// <summary>
-	/// Covert a <see cref="FiberClient"/> object into an <see cref="IFiberTerminal"/>.
+	/// Convert a <see cref="IXCOnt"/> object into an <see cref="IOnt"/>.
 	/// </summary>
 	/// <returns>
-	/// A new instance of <see cref="IFiberTerminal"/> object with the same properties of this <see cref="FiberClient"/> object.
+	/// A new instance of <see cref="IOnt"/> object with the same properties of this <see cref="IXCOnt"/> object.
 	/// </returns>
-	internal IFiberTerminal ToFiberTerminal()
+	internal IOnt ToOnt()
 	{
-		return new FiberTerminal
+		return new Ont
 		{
 			Id = int.TryParse(this.Id, out var id) ? id : default,
 			ContractId = int.TryParse(this.ContractId, out var contractId) ? contractId : default,

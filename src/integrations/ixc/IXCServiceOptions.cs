@@ -9,7 +9,7 @@ public sealed class IXCServiceOptions
 {
 	public HttpClientOptions HttpClientOptions { get; set; }
 
-	internal IXCServiceOptions()
+	public IXCServiceOptions()
 	{
 		HttpClientOptions = new HttpClientOptions();
 	}

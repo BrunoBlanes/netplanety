@@ -193,6 +193,8 @@ internal sealed class SmtpService : ISmtpService
 		// gracefully close the connection to the server
 		await cancellationTokenSource.CancelAsync();
 		await smtpClient.DisconnectAsync(true);
+		smtpClient.Disconnected -= Reconnect;
+		smtpClient.Authenticated -= DeQueue;
 		Messages.Clear();
 
 		smtpClient.Dispose();

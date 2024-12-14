@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<!-- Project properties -->
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>preview</LangVersion>
+		<Nullable>enable</Nullable>
+		
+		<UserSecretsId>aspnet-Netplanety.Identity-ca42d55f-8dd0-4779-a428-4caa6b9953d4</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Package references -->
+		<PackageReference Include="Duende.AccessTokenManagement" Version="3.0.1" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.8" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<!-- Project references -->
+		<ProjectReference Include="..\shared\Netplanety.Shared.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="keys\" />
+	  <Folder Include="Logging\" />
+	</ItemGroup>
+</Project>

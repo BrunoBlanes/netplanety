@@ -4,7 +4,7 @@ using Netplanety.Shared.Interfaces;
 
 namespace Netplanety.Shared.Models;
 
-public struct FiberTerminal : IFiberTerminal
+public struct Ont : IOnt
 {
 	public int Id { get; set; }
 	public int ContractId { get; set; }

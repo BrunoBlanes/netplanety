@@ -6,6 +6,7 @@ using Netplanety.Integrations.IXC.Tests.Mocks;
 using Netplanety.Shared.Exceptions;
 using Netplanety.Shared.Interfaces;
 using Netplanety.Shared.Models;
+using Netplanety.Tests.Common.Mocks;
 
 namespace Netplanety.Integrations.IXC.Tests;
 
@@ -37,7 +38,7 @@ public sealed class IXCServiceTests
 		// Arrange
 		var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_7314);
 		var cancellationToken = new CancellationToken();
-		var testFiberTerminal = new FiberTerminal
+		var testFiberTerminal = new Ont
 		{
 			Id = 7314,
 			ContractId = 10085,
@@ -59,7 +60,7 @@ public sealed class IXCServiceTests
 
 		// Act
 		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		IFiberTerminal? fiberTerminal = await ixcService.GetFiberTerminalAsync(7314, cancellationToken);
+		IOnt? fiberTerminal = await ixcService.GetOntAsync(7314, cancellationToken);
 
 		// Assert
 		Assert.IsNotNull(fiberTerminal);
@@ -75,7 +76,7 @@ public sealed class IXCServiceTests
 
 		// Act
 		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		IFiberTerminal? fiberTerminal = await ixcService.GetFiberTerminalAsync(7314, cancellationToken);
+		IOnt? fiberTerminal = await ixcService.GetOntAsync(7314, cancellationToken);
 
 		// Assert
 		Assert.IsNull(fiberTerminal);
@@ -90,10 +91,10 @@ public sealed class IXCServiceTests
 
 		// Act
 		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		Task task = ixcService.GetFiberTerminalAsync(7314, cancellationToken);
+		Func<Task> GetFiberTerminalAsyncFunc = async () => await ixcService.GetOntAsync(7314, cancellationToken);
 
 		// Assert
-		await Assert.ThrowsExceptionAsync<DeserializationException>(async () => await task);
+		await Assert.ThrowsExceptionAsync<DeserializationException>(GetFiberTerminalAsyncFunc);
 	}
 
 	[TestMethod]
@@ -105,10 +106,10 @@ public sealed class IXCServiceTests
 
 		// Act
 		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		Task task = ixcService.GetFiberTerminalAsync(7314, cancellationToken);
+		Func<Task> GetFiberTerminalAsyncFunc = async () => await ixcService.GetOntAsync(7314, cancellationToken);
 
 		// Assert
-		await Assert.ThrowsExceptionAsync<DeserializationException>(async () => await task);
+		await Assert.ThrowsExceptionAsync<DeserializationException>(GetFiberTerminalAsyncFunc);
 	}
 
 	[TestMethod]
@@ -120,9 +121,9 @@ public sealed class IXCServiceTests
 
 		// Act
 		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		Task task = ixcService.GetFiberTerminalAsync(7314, cancellationToken);
+		Func<Task> GetFiberTerminalAsyncFunc = async () => await ixcService.GetOntAsync(7314, cancellationToken);
 
 		// Assert
-		await Assert.ThrowsExceptionAsync<DuplicateIdException>(async () => await task);
+		await Assert.ThrowsExceptionAsync<DuplicateIdException>(GetFiberTerminalAsyncFunc);
 	}
 }
