@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using Netplanety.Shared.Interfaces;
+using Netplanety.Shared.Models;
 
 namespace Netplanety.Api.Controllers;
 
@@ -13,17 +14,17 @@ public class OntController : ControllerBase
     private readonly IERPService _erpService;
 
     public OntController(IERPService erpService)
-	{
+    {
         _erpService = erpService;
-	}
+    }
 
-	[HttpGet]
-	[Authorize("Technical")]
-	[ProducesResponseType(StatusCodes.Status200OK)]
-	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	public async Task<ActionResult<IOnt>> GetOntAsync([FromQuery] int id, CancellationToken cancellationToken)
-	{
-		IOnt? fiberTerminal = await erpService.GetOntAsync(id, cancellationToken);
-		return fiberTerminal is null ? NotFound() : Ok(fiberTerminal);
-	}
+    [HttpGet]
+    [Authorize("Technical")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Ont>> GetOntAsync([FromQuery] int id, CancellationToken cancellationToken)
+    {
+        Ont? ont = await _erpService.GetOntAsync(id, cancellationToken);
+        return ont is null ? NotFound() : Ok(ont);
+    }
 }
