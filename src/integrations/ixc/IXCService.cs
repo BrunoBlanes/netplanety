@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Headers;
 
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Netplanety.Integrations.IXC.Extensions.Http;
@@ -16,19 +15,17 @@ namespace Netplanety.Integrations.IXC;
 /// <remarks>For more information go to: <see href="https://wikiapiprovedor.ixcsoft.com.br/"/></remarks>
 internal sealed class IXCService : IERPService, IDisposable
 {
-	private readonly ILogger<IXCService> logger;
-	private readonly HttpClient httpClient;
-	private bool disposedValue;
+    private readonly HttpClient _httpClient;
+    private bool _disposedValue;
 
-	public IXCService(ILogger<IXCService> logger, HttpClient httpClient, IOptions<IXCServiceOptions> options)
+    public IXCService(HttpClient httpClient, IOptions<IXCServiceOptions> options)
 	{
-		this.logger = logger;
-		this.httpClient = httpClient;
+        _httpClient = httpClient;
 
 		// Configure the API client
-		this.httpClient.BaseAddress = new Uri(options.Value.HttpClientOptions.BaseAddress);
-		this.httpClient.DefaultRequestHeaders.Add("Authorization", $"Basic {options.Value.HttpClientOptions.Token}");
-		this.httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        _httpClient.BaseAddress = new Uri(options.Value.HttpClientOptions.BaseAddress);
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Basic {options.Value.HttpClientOptions.Token}");
+        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 	}
 
 	public async Task<IOnt?> GetOntAsync(int id, CancellationToken cancellationToken)
@@ -39,12 +36,15 @@ internal sealed class IXCService : IERPService, IDisposable
 
 	public async Task<IClient?> GetClientByCpfAsync(string cpf, CancellationToken cancellationToken)
 	{
-		IXCClient? client;
+        IClient? client;
 
 		try
 		{
-			client = await httpClient.GetSingleAsync<IXCClient>(QueryEndpoints.Client, QueryFilters.CPF, cpf, cancellationToken);
-			return client?.ToClient();
+            client = await _httpClient.GetSingleAsync<IXCClient>(
+                QueryEndpoints.Client,
+                QueryFilters.CPF,
+                cpf,
+                cancellationToken);
 		}
 
 		catch (InvalidOperationException)
@@ -55,14 +55,14 @@ internal sealed class IXCService : IERPService, IDisposable
 
 	private void Dispose(bool disposing)
 	{
-		if (disposedValue is false)
+        if (_disposedValue is false)
 		{
 			if (disposing)
 			{
-				httpClient.Dispose();
+                _httpClient.Dispose();
 			}
 
-			disposedValue = true;
+            _disposedValue = true;
 		}
 	}
 

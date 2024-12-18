@@ -7,10 +7,10 @@ namespace Netplanety.Integrations.IXC;
 /// </summary>
 public sealed class IXCServiceOptions
 {
-	public HttpClientOptions HttpClientOptions { get; set; }
+    public HttpClientOptions HttpClientOptions { get; set; }
 
-	public IXCServiceOptions()
-	{
-		HttpClientOptions = new HttpClientOptions();
-	}
+    public IXCServiceOptions()
+    {
+        HttpClientOptions = new HttpClientOptions();
+    }
 }

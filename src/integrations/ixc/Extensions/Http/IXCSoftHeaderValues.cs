@@ -5,8 +5,8 @@
 /// </summary>
 internal readonly struct IXCSoftHeaderValues
 {
-	/// <summary>
-	/// The <c>ixcsoft</c> header value to list objects.
-	/// </summary>
-	internal const string List = "listar";
+    /// <summary>
+    /// The <c>ixcsoft</c> header value to list objects.
+    /// </summary>
+    internal const string List = "listar";
 }

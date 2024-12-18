@@ -2,10 +2,10 @@
 
 public sealed class DuplicateIdException : Exception
 {
-	public int Id { get; init; }
+    public int Id { get; init; }
 
-	public DuplicateIdException(int id)
-	{
-		Id = id;
-	}
+    public DuplicateIdException(int id)
+    {
+        Id = id;
+    }
 }

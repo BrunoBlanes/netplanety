@@ -5,8 +5,8 @@
 /// </summary>
 public readonly struct ApiResources
 {
-	/// <summary>
-	/// The Clients API resource.
-	/// </summary>
-	public const string Clients = "urn:clients";
+    /// <summary>
+    /// The Clients API resource.
+    /// </summary>
+    public const string Clients = "urn:clients";
 }

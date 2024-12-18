@@ -34,7 +34,7 @@ internal static class HttpClientExtensions
 	/// <exception cref="DeserializationException"></exception>
 	/// <exception cref="OperationCanceledException"></exception>
 	/// <returns>The single <typeparamref name="T"/> deserialized object.</returns>
-	internal async static Task<T?> GetByIdAsync<T>(
+    internal static async Task<T?> GetByIdAsync<T>(
 		this HttpClient httpClient,
 		int id,
 		string endpoint,
@@ -67,7 +67,7 @@ internal static class HttpClientExtensions
 	/// <exception cref="DeserializationException"></exception>
 	/// <exception cref="InvalidOperationException"></exception>
 	/// <exception cref="OperationCanceledException"></exception>
-	internal static async Task<T?>GetSingleAsync<T>(
+    internal static async Task<T?> GetSingleAsync<T>(
 		this HttpClient httpClient,
 		string endpoint,
 		string queryFilter,
@@ -111,7 +111,7 @@ internal static class HttpClientExtensions
 			cancellationToken);
 
 		// Process the response body
-		var content = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
+        string content = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
 		QueryResult<T> queryResult;
 
 		try
@@ -127,7 +127,7 @@ internal static class HttpClientExtensions
 
 		if (queryResult.Total > 0)
 		{
-			if (queryResult.Results.Any())
+                    if (queryResult.Results.Length is not 0)
 			{
 				// Return the result
 				return queryResult.Results;
