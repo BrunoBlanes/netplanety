@@ -1,0 +1,28 @@
+﻿h1 {
+	margin: 10px 0;
+	font-size: 30px;
+}
+
+h2 {
+	margin: 10px 0;
+	font-size: 18px;
+}
+
+hr {
+	width: calc(100% - 2px);
+}
+
+input {
+	border: 0;
+	height: 30px;
+	margin: 16px 0;
+	border-radius: 5px;
+	width: calc(100% - 4px);
+}
+
+button {
+	border: 0;
+	width: 120px;
+	height: 35px;
+	border-radius: 5px;
+}

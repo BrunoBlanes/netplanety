@@ -1,0 +1,17 @@
+﻿.title {
+
+}
+
+.form {
+	height: 100%;
+}
+
+.form-input {
+
+}
+
+.buttons {
+	width: 100%;
+	display: flex;
+	margin: 20px 0 0 0;
+}

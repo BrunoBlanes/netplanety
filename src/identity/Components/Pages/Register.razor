@@ -1,0 +1,71 @@
+﻿@page "/signup"
+
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Netplanety.Identity.Models
+
+<PageTitle>Register</PageTitle>
+
+@if (_registrationStage is > RegistrationStage.Email and < RegistrationStage.Confirmation)
+{
+    <div>
+        @Input.Email
+    </div>
+}
+
+<div class="title">
+    <h1>Create an account</h1>
+    <h2>Let's create a new account</h2>
+    <hr />
+</div>
+
+<div class="form">
+    <EditForm EditContext="EditContext" FormName="register" OnValidSubmit="CreateUserAsync" Enhance="true" method="post" asp-route-returnUrl="@ReturnUrl">
+        <DataAnnotationsValidator />
+
+        @if (_registrationStage is RegistrationStage.Email)
+        {
+            <div class="form-input">
+                <label for="email-input">
+                    <InputText id="email-input" @bind-Value="Input.Email" @oninput="EmailOnInputEventHandler" autocomplete="username" placeholder="Email" />
+                </label>
+                <ValidationMessage For="() => Input.Email" />
+            </div>
+        }
+
+        else if (_registrationStage is RegistrationStage.Password)
+        {
+            <div class="form-input">
+                <label for="password-input">
+                    <InputText id="password-input" @bind-Value="((PasswordInputModel)Input).Password" type="password" autocomplete="new-password" placeholder="Password" />
+                </label>
+                <ValidationMessage For="() => ((PasswordInputModel)Input).Password" hidden="@HideValidation" />
+            </div>
+        }
+
+        else if (_registrationStage is RegistrationStage.Identification)
+        {
+            <div class="form-input">
+                <label for="cpf-input">
+                    <input id="cpf-input" @ref="CpfInput" @bind-value="((CpfInputModel)Input).CPF" placeholder="___.___.___-__" maxlength="14" />
+                </label>
+                <ValidationMessage For="() => ((CpfInputModel)Input).CPF" hidden="@HideValidation" />
+            </div>
+        }
+
+        else if (_registrationStage is RegistrationStage.Confirmation)
+        {
+            <div>
+                @Client?.FirstName @Client?.LastName
+            </div>
+        }
+
+        <div class="buttons" style="@(ShowBackButton ? "justify-content: space-between;" : "justify-content: end;")">
+            @if (ShowBackButton)
+            {
+                <button @onclick="OnGoBackButtonClick">Back</button>
+            }
+            <button type="submit">Next</button>
+        </div>
+    </EditForm>
+</div>

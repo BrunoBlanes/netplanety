@@ -6,6 +6,7 @@ using Netplanety.Integrations.IXC.Extensions.Http;
 using Netplanety.Integrations.IXC.Models;
 using Netplanety.Shared.Exceptions;
 using Netplanety.Shared.Interfaces;
+using Netplanety.Shared.Models;
 
 namespace Netplanety.Integrations.IXC;
 
@@ -34,7 +35,7 @@ internal sealed class IXCService : IERPService, IDisposable
 		return fiberClient?.ToOnt();
 	}
 
-	public async Task<IClient?> GetClientByCpfAsync(string cpf, CancellationToken cancellationToken)
+    public async Task<Client?> GetClientByCpfAsync(string cpf, CancellationToken cancellationToken)
 	{
         IClient? client;
 
@@ -51,6 +52,8 @@ internal sealed class IXCService : IERPService, IDisposable
 		{
 			throw new DuplicateCpfException(cpf);
 		}
+
+        return client is null ? null : new Client(client);
 	}
 
 	private void Dispose(bool disposing)

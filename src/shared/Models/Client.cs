@@ -1,18 +1,29 @@
-﻿using Netplanety.Shared.Interfaces;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using Netplanety.Shared.Interfaces;
 
 namespace Netplanety.Shared.Models;
 
-public struct Client : IClient
+public readonly struct Client : IClient
 {
-	public int Id { get; set; }
-	public string CPF { get; set; }
-	public bool IsActive { get; set; }
-	public string Name { get; set; }
-	public DateTime Birthday { get; set; }
+    public required int Id { get; init; }
+    public required string FirstName { get; init; }
+    public required string LastName { get; init; }
+    public required string CPF { get; init; }
 
-	public Client()
-	{
-		CPF = string.Empty;
-		Name = string.Empty;
-	}
+    public Client()
+    {
+        CPF = string.Empty;
+        FirstName = string.Empty;
+        LastName = string.Empty;
+    }
+
+    [SetsRequiredMembers]
+    public Client(IClient client)
+    {
+        Id = client.Id;
+        CPF = client.CPF;
+        FirstName = client.FirstName;
+        LastName = client.LastName;
+    }
 }
