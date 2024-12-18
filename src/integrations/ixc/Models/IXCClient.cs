@@ -1,90 +1,81 @@
 ﻿using System.Text.Json.Serialization;
 
 using Netplanety.Shared.Interfaces;
-using Netplanety.Shared.Models;
+using Netplanety.Shared.Extensions;
 
 namespace Netplanety.Integrations.IXC.Models;
 
-internal readonly struct IXCClient
+internal readonly struct IXCClient : IClient
 {
-	[JsonInclude]
-	internal string Id { get; }
+    [JsonInclude]
+    internal string ClientId { get; init; }
 
-	[JsonInclude]
-	[JsonPropertyName("ativo")]
-	internal string Active { get; }
+    [JsonInclude]
+    [JsonPropertyName("ativo")]
+    internal string Active { get; init; }
 
-	[JsonInclude]
-	[JsonPropertyName("razao")]
-	internal string Name { get; }
+    [JsonInclude]
+    [JsonPropertyName("razao")]
+    internal string Name { get; init; }
 
-	[JsonInclude]
-	[JsonPropertyName("cnpj_cpf")]
-	internal string CPF { get; }
+    [JsonPropertyName("cnpj_cpf")]
+    public string CPF { get; init; }
 
-	[JsonInclude]
-	[JsonPropertyName("uf")]
-	internal string State { get; }
+    [JsonInclude]
+    [JsonPropertyName("uf")]
+    internal string State { get; init; }
 
-	[JsonInclude]
-	[JsonPropertyName("endereco")]
-	internal string Address { get; }
+    [JsonInclude]
+    [JsonPropertyName("endereco")]
+    internal string Address { get; init; }
 
-	[JsonInclude]
-	[JsonPropertyName("cidade")]
-	internal string City { get; }
+    [JsonInclude]
+    [JsonPropertyName("cidade")]
+    internal string City { get; init; }
 
-	[JsonInclude]
-	[JsonPropertyName("bairro")]
-	internal string Neighbourhood { get; }
+    [JsonInclude]
+    [JsonPropertyName("bairro")]
+    internal string Neighbourhood { get; init; }
 
-	[JsonInclude]
-	[JsonPropertyName("numero")]
-	internal string Number { get; }
+    [JsonInclude]
+    [JsonPropertyName("numero")]
+    internal string Number { get; init; }
 
-	[JsonInclude]
-	internal string CEP { get; }
+    [JsonInclude]
+    internal string CEP { get; init; }
 
-	[JsonInclude]
-	[JsonPropertyName("data_nascimento")]
-	internal string Birthday { get; }
+    [JsonInclude]
+    [JsonPropertyName("data_nascimento")]
+    internal string Birthday { get; init; }
 
-	[JsonConstructor]
-	internal IXCClient(
-		string id,
-		string active,
-		string name,
-		string cpf,
-		string state,
-		string address,
-		string city,
-		string neighbourhood,
-		string number,
-		string cep,
-		string birthday)
-	{
-		Id = id;
-		Active = active;
-		Name = name;
-		CPF = cpf;
-		State = state;
-		Address = address;
-		City = city;
-		Neighbourhood = neighbourhood;
-		Number = number;
-		CEP = cep;
-		Birthday = birthday;
-	}
+    public int Id { get => int.TryParse(ClientId, out int id) ? id : field; init; }
+    public string FirstName => Name.Split(' ')[0].Capitalize();
+    public string LastName => Name.Split(' ')[^1].Capitalize();
 
-	internal IClient ToClient()
-	{
-		return new Client
-		{
-			Name = this.Name,
-			IsActive = this.Active == "S",
-			Id = int.TryParse(this.Id, out var id) ? id : default,
-			CPF = this.CPF,
-			Birthday = DateTime.Parse(this.Birthday)
-		};
-	}
+    [JsonConstructor]
+    internal IXCClient(
+        string clientId,
+        string active,
+        string name,
+        string cpf,
+        string state,
+        string address,
+        string city,
+        string neighbourhood,
+        string number,
+        string cep,
+        string birthday)
+    {
+        ClientId = clientId;
+        Active = active;
+        Name = name;
+        CPF = cpf;
+        State = state;
+        Address = address;
+        City = city;
+        Neighbourhood = neighbourhood;
+        Number = number;
+        CEP = cep;
+        Birthday = birthday;
+    }
 }
