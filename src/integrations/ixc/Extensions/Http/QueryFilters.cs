@@ -5,13 +5,13 @@
 /// </summary>
 internal readonly struct QueryFilters
 {
-	/// <summary>
-	/// The <c>Id</c> field.
-	/// </summary>
-	internal const string Id = "id";
+    /// <summary>
+    /// The <c>Id</c> field.
+    /// </summary>
+    internal const string Id = "id";
 
-	/// <summary>
-	/// The <c>CPF/CNPJ</c> field.
-	/// </summary>
-	internal const string CPF = "cnpj_cpf";
+    /// <summary>
+    /// The <c>CPF/CNPJ</c> field.
+    /// </summary>
+    internal const string CPF = "cnpj_cpf";
 }

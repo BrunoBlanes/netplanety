@@ -31,7 +31,7 @@ public static class IdentityScopesExtensions
 
 		// Trims the end space
 		// and returns the string
-		return scopes.ToArray();
+        return [.. scopes];
 	}
 
 	/// <summary>

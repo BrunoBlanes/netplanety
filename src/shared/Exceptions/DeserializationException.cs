@@ -2,10 +2,10 @@
 
 public sealed class DeserializationException : Exception
 {
-	public string Content { get; init; }
+    public string Content { get; init; }
 
-	public DeserializationException(string content)
-	{
-		Content = content;
-	}
+    public DeserializationException(string content)
+    {
+        Content = content;
+    }
 }

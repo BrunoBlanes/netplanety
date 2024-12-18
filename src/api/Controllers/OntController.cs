@@ -10,13 +10,11 @@ namespace Netplanety.Api.Controllers;
 [Route("[controller]")]
 public class OntController : ControllerBase
 {
-	private readonly ILogger<OntController> logger;
-	private readonly IERPService erpService;
+    private readonly IERPService _erpService;
 
-	public OntController(IERPService erpService, ILogger<OntController> logger)
+    public OntController(IERPService erpService)
 	{
-		this.logger = logger;
-		this.erpService = erpService;
+        _erpService = erpService;
 	}
 
 	[HttpGet]

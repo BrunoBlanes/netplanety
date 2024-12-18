@@ -13,117 +13,117 @@ namespace Netplanety.Integrations.IXC.Tests;
 [TestClass]
 public sealed class IXCServiceTests
 {
-	private readonly IOptions<IXCServiceOptions> options;
-	private readonly ILogger<IXCService> logger;
+    private readonly IOptions<IXCServiceOptions> _options;
+    private readonly ILogger<IXCService> _logger;
 
-	public IXCServiceTests()
-	{
-		options = Options.Create<IXCServiceOptions>(new IXCServiceOptions
-		{
-			HttpClientOptions = new HttpClientOptions
-			{
-				BaseAddress = "https://example.com/api/v1/",
+    public IXCServiceTests()
+    {
+        _options = Options.Create<IXCServiceOptions>(new IXCServiceOptions
+        {
+            HttpClientOptions = new HttpClientOptions
+            {
+                BaseAddress = "https://example.com/api/v1/",
 
-				// Fake base64 string token
-				Token = "iIRQBsXVO3YFS4gyZgNq64nyvLKmz9nR7I+/cUVR+7dsx1wUI4eaJ29mkZcQOGOYBRw4iXfoUlF+1iwLJWLhYA=="
-			}
-		});
+                // Fake base64 string token
+                Token = "iIRQBsXVO3YFS4gyZgNq64nyvLKmz9nR7I+/cUVR+7dsx1wUI4eaJ29mkZcQOGOYBRw4iXfoUlF+1iwLJWLhYA=="
+            }
+        });
 
-		logger = new MockLogger<IXCService>();
-	}
+        _logger = new MockLogger<IXCService>();
+    }
 
-	[TestMethod]
-	public async Task GetFiberTerminal_ReturnsExpectedResult()
-	{
-		// Arrange
-		var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_7314);
-		var cancellationToken = new CancellationToken();
-		var testFiberTerminal = new Ont
-		{
-			Id = 7314,
-			ContractId = 10085,
-			ProjectId = "26",
-			TransmissorId = "3",
-			Name = "12707_BRUNO_ORTEGA_BLANES",
-			OpticalTerminationBoxId = "16",
-			Port = "13",
-			LoginId = "9171",
-			PonId = "0/1/5",
-			MAC = "4857544376C0E3A5",
-			RxSignal = 21.35,
-			TxSignal = 25.41,
-			Temperature = 52,
-			Voltage = 3.32f,
-			ProfileId = "1",
-			VLAN = "1000"
-		};
+    [TestMethod]
+    public async Task GetFiberTerminal_ReturnsExpectedResult()
+    {
+        // Arrange
+        var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_7314);
+        var cancellationToken = new CancellationToken();
+        var testFiberTerminal = new Ont
+        {
+            Id = 7314,
+            ContractId = 10085,
+            ProjectId = "26",
+            TransmissorId = "3",
+            Name = "12707_BRUNO_ORTEGA_BLANES",
+            OpticalTerminationBoxId = "16",
+            Port = "13",
+            LoginId = "9171",
+            PonId = "0/1/5",
+            MAC = "4857544376C0E3A5",
+            RxSignal = 21.35,
+            TxSignal = 25.41,
+            Temperature = 52,
+            Voltage = 3.32f,
+            ProfileId = "1",
+            VLAN = "1000"
+        };
 
-		// Act
-		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		IOnt? fiberTerminal = await ixcService.GetOntAsync(7314, cancellationToken);
+        // Act
+        using var ixcService = new IXCService(new HttpClient(httpMessageHandler), _options);
+        IOnt? fiberTerminal = await ixcService.GetOntAsync(7314, cancellationToken);
 
-		// Assert
-		Assert.IsNotNull(fiberTerminal);
-		Assert.AreEqual(testFiberTerminal, fiberTerminal);
-	}
+        // Assert
+        Assert.IsNotNull(fiberTerminal);
+        Assert.AreEqual(testFiberTerminal, fiberTerminal);
+    }
 
-	[TestMethod]
-	public async Task GetFiberTerminal_ReturnsNull()
-	{
-		// Arrange
-		var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_Not_Found);
-		var cancellationToken = new CancellationToken();
+    [TestMethod]
+    public async Task GetFiberTerminal_ReturnsNull()
+    {
+        // Arrange
+        var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_Not_Found);
+        var cancellationToken = new CancellationToken();
 
-		// Act
-		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		IOnt? fiberTerminal = await ixcService.GetOntAsync(7314, cancellationToken);
+        // Act
+        using var ixcService = new IXCService(new HttpClient(httpMessageHandler), _options);
+        IOnt? fiberTerminal = await ixcService.GetOntAsync(7314, cancellationToken);
 
-		// Assert
-		Assert.IsNull(fiberTerminal);
-	}
+        // Assert
+        Assert.IsNull(fiberTerminal);
+    }
 
-	[TestMethod]
-	public async Task GetFiberTerminal_Throws_DeserializationException_On_Broken_Json()
-	{
-		// Arrange
-		var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_Broken_Json);
-		var cancellationToken = new CancellationToken();
+    [TestMethod]
+    public async Task GetFiberTerminal_Throws_DeserializationException_On_Broken_Json()
+    {
+        // Arrange
+        var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_Broken_Json);
+        var cancellationToken = new CancellationToken();
 
-		// Act
-		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		Func<Task> GetFiberTerminalAsyncFunc = async () => await ixcService.GetOntAsync(7314, cancellationToken);
+        // Act
+        using var ixcService = new IXCService(new HttpClient(httpMessageHandler), _options);
+        async Task GetFiberTerminalAsyncFunc() => await ixcService.GetOntAsync(7314, cancellationToken);
 
-		// Assert
-		await Assert.ThrowsExceptionAsync<DeserializationException>(GetFiberTerminalAsyncFunc);
-	}
+        // Assert
+        await Assert.ThrowsExceptionAsync<DeserializationException>(GetFiberTerminalAsyncFunc);
+    }
 
-	[TestMethod]
-	public async Task GetFiberTerminal_Throws_DeserializationException_On_Broken_Response()
-	{
-		// Arrange
-		var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_Broken_Response);
-		var cancellationToken = new CancellationToken();
+    [TestMethod]
+    public async Task GetFiberTerminal_Throws_DeserializationException_On_Broken_Response()
+    {
+        // Arrange
+        var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_Broken_Response);
+        var cancellationToken = new CancellationToken();
 
-		// Act
-		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		Func<Task> GetFiberTerminalAsyncFunc = async () => await ixcService.GetOntAsync(7314, cancellationToken);
+        // Act
+        using var ixcService = new IXCService(new HttpClient(httpMessageHandler), _options);
+        async Task GetFiberTerminalAsyncFunc() => await ixcService.GetOntAsync(7314, cancellationToken);
 
-		// Assert
-		await Assert.ThrowsExceptionAsync<DeserializationException>(GetFiberTerminalAsyncFunc);
-	}
+        // Assert
+        await Assert.ThrowsExceptionAsync<DeserializationException>(GetFiberTerminalAsyncFunc);
+    }
 
-	[TestMethod]
-	public async Task GetFiberTerminal_Throws_DuplicateIdException()
-	{
-		// Arrange
-		var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_Duplicate_Id);
-		var cancellationToken = new CancellationToken();
+    [TestMethod]
+    public async Task GetFiberTerminal_Throws_DuplicateIdException()
+    {
+        // Arrange
+        var httpMessageHandler = new MockHttpMessageHandler(MockApiResponse.FiberClient_Duplicate_Id);
+        var cancellationToken = new CancellationToken();
 
-		// Act
-		using var ixcService = new IXCService(logger, new HttpClient(httpMessageHandler), options);
-		Func<Task> GetFiberTerminalAsyncFunc = async () => await ixcService.GetOntAsync(7314, cancellationToken);
+        // Act
+        using var ixcService = new IXCService(new HttpClient(httpMessageHandler), _options);
+        async Task GetFiberTerminalAsyncFunc() => await ixcService.GetOntAsync(7314, cancellationToken);
 
-		// Assert
-		await Assert.ThrowsExceptionAsync<DuplicateIdException>(GetFiberTerminalAsyncFunc);
-	}
+        // Assert
+        await Assert.ThrowsExceptionAsync<DuplicateIdException>(GetFiberTerminalAsyncFunc);
+    }
 }

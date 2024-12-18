@@ -1,5 +1,3 @@
-﻿using System.Security.Principal;
-
 using Microsoft.AspNetCore.Authorization;
 
 using Microsoft.AspNetCore.Mvc;
@@ -14,13 +12,11 @@ namespace Netplanety.Api.Controllers;
 [Authorize(AuthorizationPolicies.Identity)]
 public class ClientController : ControllerBase
 {
-	private readonly ILogger<ClientController> logger;
-	private readonly IERPService erpService;
+    private readonly IERPService _erpService;
 
-	public ClientController(IERPService erpService, ILogger<ClientController> logger)
+    public ClientController(IERPService erpService)
 	{
-		this.logger = logger;
-		this.erpService = erpService;
+        _erpService = erpService;
 	}
 
 	[HttpGet]
