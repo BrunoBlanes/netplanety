@@ -1,32 +1,32 @@
 ﻿<Project Sdk="MSTest.Sdk">
-	<PropertyGroup>
-		<!-- Project properties -->
-		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-		<TargetFramework>net9.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>latest</LangVersion>
-		<Nullable>enable</Nullable>
+  <PropertyGroup>
+    <!-- Project properties -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
 
-		<!-- Testing related properties-->
-		<TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
-	</PropertyGroup>
+    <!-- Testing related properties-->
+    <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<!-- Package references -->
-		<PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.6" />
-		<PackageReference Update="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
-		<PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
-		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <!-- Package references -->
+    <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.6" />
+    <PackageReference Update="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="17.12.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<!-- Project references -->
-		<ProjectReference Include="..\..\..\integrations\ixc\Netplanety.Integrations.IXC.csproj" />
-		<ProjectReference Include="..\..\common\Netplanety.Tests.Common.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <!-- Project references -->
+    <ProjectReference Include="..\..\..\integrations\ixc\Netplanety.Integrations.IXC.csproj" />
+    <ProjectReference Include="..\..\common\Netplanety.Tests.Common.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<!-- Assembly attributes -->
-		<AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
-	</ItemGroup>
+  <ItemGroup>
+    <!-- Assembly attributes -->
+    <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
+  </ItemGroup>
 </Project>
